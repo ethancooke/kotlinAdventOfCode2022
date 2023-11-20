@@ -1,17 +1,27 @@
+import java.io.File
+
+fun findMaxCalories(calorieList: List<String>): Int {
+    var maxCalories = 0
+    var currentCalories = 0
+
+    for (item in calorieList) {
+        if (item.isEmpty()) {  // New elf
+            maxCalories = maxOf(maxCalories, currentCalories)
+            currentCalories = 0
+        } else {
+            currentCalories += item.toInt()
+        }
+    }
+
+    // Check for the last elf
+    maxCalories = maxOf(maxCalories, currentCalories)
+
+    return maxCalories
+}
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
-    }
-
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+    val fileName = "src/Day01_input"
+    val calorieList = File(fileName).readLines()
+    val maxCalories = findMaxCalories(calorieList)
+    println("The Elf carrying the most calories is carrying a total of $maxCalories calories.")
 }
